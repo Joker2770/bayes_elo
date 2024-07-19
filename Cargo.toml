@@ -7,6 +7,6 @@ description = "A library for calculating Elo in balanced and unbalanced competit
 homepage = "https://github.com/Joker2770/bayes_elo.git"
 repository = "https://github.com/Joker2770/bayes_elo.git"
 authors = ["Joker2770"]
-keywords = ["elo", "bayes", "balanced", "unbalanced", "games", "eval", "rank_algorithm"]
+keywords = ["elo", "bayes", "unbalanced", "games", "rank_algorithm"]
 
 [dependencies]

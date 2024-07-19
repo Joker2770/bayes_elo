@@ -64,6 +64,10 @@ impl BayesElo {
         self.elo_draw
     }
 
+    /// @params winner_elo: f64 - winner's elo.
+    ///         loser_elo: f64 - loser's elo.
+    ///         is_winner_advantage：bool - if winner is advantage camp.
+    /// @return (new_winner_elo: f64, new_loser_elo: f64).
     pub fn calculate(
         &self,
         winner_elo: f64,
@@ -107,6 +111,10 @@ impl BayesElo {
         (new_winner_elo, new_loser_elo)
     }
 
+    /// @params winner_elo: f64 - winner's elo.
+    ///         loser_elo: f64 - loser's elo.
+    ///         is_winner_advantage：bool - if winner is advantage camp.
+    /// @return (new_winner_elo: f64, new_loser_elo: f64).
     pub fn calculate_4_draw(&self, 
         winner_elo: f64,
         loser_elo: f64,

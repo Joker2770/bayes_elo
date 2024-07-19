@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 pub mod elo_expectation {
+    /// f(Delta) = 1 / (1 + 10^(Delta/400))
     pub fn get_elo_expectation(delta: f64) -> f64 {
         1.0 / (1.0 + (10.0_f64.powf(delta / 400.0)))
     }

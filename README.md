@@ -1,4 +1,7 @@
 # bayes_elo
+
+[![Rust](https://github.com/Joker2770/bayes_elo/actions/workflows/rust.yml/badge.svg)](https://github.com/Joker2770/bayes_elo/actions/workflows/rust.yml)
+
 A library for calculating Elo in balanced and unbalanced competitions or games.
 
 ## Usage

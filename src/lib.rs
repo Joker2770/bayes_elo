@@ -35,6 +35,7 @@ pub struct BayesElo {
 }
 
 impl BayesElo {
+    /// Create new object.
     pub fn new() -> Self {
         BayesElo {
             k_factor: 32.0,
@@ -44,21 +45,25 @@ impl BayesElo {
         }
     }
 
+    /// Set K factor coefficient.
     pub fn set_k_factor(&mut self, k: f64) -> f64 {
         self.k_factor = k;
         self.k_factor
     }
 
+    /// Set result duty cycle.
     pub fn set_result_duty_cycle(&mut self, actual_p: ActualProbability) -> (f64, f64, f64) {
         self.result_duty_cycle = actual_p.into();
         self.result_duty_cycle
     }
 
+    /// Set elo advantage.
     pub fn set_elo_advantage(&mut self, advantage: f64) -> f64 {
         self.elo_advantage = advantage;
         self.elo_advantage
     }
 
+    /// Set elo draw.
     pub fn set_elo_draw(&mut self, draw: f64) -> f64 {
         self.elo_draw = draw;
         self.elo_draw
@@ -110,48 +115,48 @@ impl BayesElo {
         (new_winner_elo, new_loser_elo)
     }
 
-    /// winner_elo - winner's elo.
-    /// loser_elo - loser's elo.
-    /// is_winner_advantage - if winner is advantage camp.
+    /// first_player_elo - first-player's elo.
+    /// second_player_elo - second-player's elo.
+    /// is_first_player_advantage - if first-player is advantage camp.
     pub fn calculate_4_draw(&self, 
-        winner_elo: f64,
-        loser_elo: f64,
-        is_winner_advantage: bool) -> (f64, f64) {
-            let delta_4_winner = Delta {
-                opponent_elo: loser_elo,
-                current_elo: winner_elo,
+        first_player_elo: f64,
+        second_player_elo: f64,
+        is_first_player_advantage: bool) -> (f64, f64) {
+            let delta_4_first = Delta {
+                opponent_elo: second_player_elo,
+                current_elo: first_player_elo,
                 elo_advantage: self.elo_advantage,
                 elo_draw: self.elo_draw,
-                is_advantage_camp: is_winner_advantage,
+                is_advantage_camp: is_first_player_advantage,
             };
     
-            let delta_4_loser = Delta {
-                opponent_elo: winner_elo,
-                current_elo: loser_elo,
+            let delta_4_second = Delta {
+                opponent_elo: first_player_elo,
+                current_elo: second_player_elo,
                 elo_advantage: self.elo_advantage,
                 elo_draw: self.elo_draw,
-                is_advantage_camp: !is_winner_advantage,
+                is_advantage_camp: !is_first_player_advantage,
             };
     
-            let p_w_e = delta_4_winner.get_probability();
-            let p_l_e = delta_4_loser.get_probability();
+            let p_w_e = delta_4_first.get_probability();
+            let p_l_e = delta_4_second.get_probability();
     
-            let winner_elo_rank_delta = EloRankDelta {
+            let first_elo_rank_delta = EloRankDelta {
                 w_r: self.result_duty_cycle.1,
                 w_e: p_w_e,
                 k: self.k_factor,
             };
     
-            let loser_elo_rank_delta = EloRankDelta {
+            let second_elo_rank_delta = EloRankDelta {
                 w_r: self.result_duty_cycle.1,
                 w_e: p_l_e,
                 k: self.k_factor,
             };
     
-            let new_winner_elo = winner_elo + winner_elo_rank_delta.get_elo_rank_delta();
-            let new_loser_elo = loser_elo + loser_elo_rank_delta.get_elo_rank_delta();
+            let new_first_elo = first_player_elo + first_elo_rank_delta.get_elo_rank_delta();
+            let new_second_elo = second_player_elo + second_elo_rank_delta.get_elo_rank_delta();
     
-            (new_winner_elo, new_loser_elo)
+            (new_first_elo, new_second_elo)
     }
 }
 

@@ -25,10 +25,10 @@ assert_eq!(result.1 < 1200.0_f64, true);
 let new_k = bayes_elo_instance.set_k_factor(20.0f64);
 println!("new k: {}", new_k);
 
-/// @params winner_elo: f64 - winner's elo.
-///         loser_elo: f64 - loser's elo.
-///         is_winner_advantage：bool - if winner is advantage camp.
-/// @return (new_winner_elo: f64, new_loser_elo: f64).
+/// @params first_player_elo: f64 - first-player's elo.
+///         second_player_elo: f64 - second-player's elo.
+///         is_first_player_advantage：bool - if first-player is advantage camp.
+/// @return (new_first_elo: f64, new_second_elo: f64).
 let result_4_draw = bayes_elo_instance.calculate_4_draw(1700.0_f64, 1200.0_f64, true);
 println!("new result_4_draw: {}, {}", result_4_draw.0, result_4_draw.1);
 assert_eq!(result_4_draw.0 < 1700.0_f64, true);

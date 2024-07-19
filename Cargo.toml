@@ -1,6 +1,12 @@
 [package]
 name = "bayes_elo"
 version = "0.1.0"
+license = "GPLv3"
 edition = "2021"
+description = "A library for calculating Elo in balanced and not balanced competitions or games."
+homepage = "https://github.com/Joker2770/bayes_elo.git"
+repository = "https://github.com/Joker2770/bayes_elo.git"
+authors = ["Joker2770"]
+keywords = ["elo", "bayes", "balanced", "unbalanced"]
 
 [dependencies]

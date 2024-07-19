@@ -1,5 +1,5 @@
 /*
-A library for calculating Elo in balanced and not balanced competitions or games.
+A library for calculating Elo in balanced and unbalanced competitions or games.
 Copyright (C) 2024  joker2770
 
 This program is free software: you can redistribute it and/or modify
@@ -64,10 +64,9 @@ impl BayesElo {
         self.elo_draw
     }
 
-    /// @params winner_elo: f64 - winner's elo.
-    ///         loser_elo: f64 - loser's elo.
-    ///         is_winner_advantage：bool - if winner is advantage camp.
-    /// @return (new_winner_elo: f64, new_loser_elo: f64).
+    /// winner_elo - winner's elo.
+    /// loser_elo - loser's elo.
+    /// is_winner_advantage - if winner is advantage camp.
     pub fn calculate(
         &self,
         winner_elo: f64,
@@ -111,10 +110,9 @@ impl BayesElo {
         (new_winner_elo, new_loser_elo)
     }
 
-    /// @params winner_elo: f64 - winner's elo.
-    ///         loser_elo: f64 - loser's elo.
-    ///         is_winner_advantage：bool - if winner is advantage camp.
-    /// @return (new_winner_elo: f64, new_loser_elo: f64).
+    /// winner_elo - winner's elo.
+    /// loser_elo - loser's elo.
+    /// is_winner_advantage - if winner is advantage camp.
     pub fn calculate_4_draw(&self, 
         winner_elo: f64,
         loser_elo: f64,

@@ -1,5 +1,5 @@
 /*
-A library for calculating Elo in balanced and not balanced competitions or games.
+A library for calculating Elo in balanced and unbalanced competitions or games.
 Copyright (C) 2024  joker2770
 
 This program is free software: you can redistribute it and/or modify

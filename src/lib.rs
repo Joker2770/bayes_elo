@@ -76,7 +76,7 @@ impl BayesElo {
         &self,
         winner_elo: f64,
         loser_elo: f64,
-        is_winner_advantage: bool
+        is_winner_advantage: bool,
     ) -> (f64, f64) {
         let delta_4_winner = Delta {
             opponent_elo: loser_elo,
@@ -118,45 +118,47 @@ impl BayesElo {
     /// first_player_elo - first-player's elo.
     /// second_player_elo - second-player's elo.
     /// is_first_player_advantage - if first-player is advantage camp.
-    pub fn calculate_4_draw(&self, 
+    pub fn calculate_4_draw(
+        &self,
         first_player_elo: f64,
         second_player_elo: f64,
-        is_first_player_advantage: bool) -> (f64, f64) {
-            let delta_4_first = Delta {
-                opponent_elo: second_player_elo,
-                current_elo: first_player_elo,
-                elo_advantage: self.elo_advantage,
-                elo_draw: self.elo_draw,
-                is_advantage_camp: is_first_player_advantage,
-            };
-    
-            let delta_4_second = Delta {
-                opponent_elo: first_player_elo,
-                current_elo: second_player_elo,
-                elo_advantage: self.elo_advantage,
-                elo_draw: self.elo_draw,
-                is_advantage_camp: !is_first_player_advantage,
-            };
-    
-            let p_w_e = delta_4_first.get_probability();
-            let p_l_e = delta_4_second.get_probability();
-    
-            let first_elo_rank_delta = EloRankDelta {
-                w_r: self.result_duty_cycle.1,
-                w_e: p_w_e,
-                k: self.k_factor,
-            };
-    
-            let second_elo_rank_delta = EloRankDelta {
-                w_r: self.result_duty_cycle.1,
-                w_e: p_l_e,
-                k: self.k_factor,
-            };
-    
-            let new_first_elo = first_player_elo + first_elo_rank_delta.get_elo_rank_delta();
-            let new_second_elo = second_player_elo + second_elo_rank_delta.get_elo_rank_delta();
-    
-            (new_first_elo, new_second_elo)
+        is_first_player_advantage: bool,
+    ) -> (f64, f64) {
+        let delta_4_first = Delta {
+            opponent_elo: second_player_elo,
+            current_elo: first_player_elo,
+            elo_advantage: self.elo_advantage,
+            elo_draw: self.elo_draw,
+            is_advantage_camp: is_first_player_advantage,
+        };
+
+        let delta_4_second = Delta {
+            opponent_elo: first_player_elo,
+            current_elo: second_player_elo,
+            elo_advantage: self.elo_advantage,
+            elo_draw: self.elo_draw,
+            is_advantage_camp: !is_first_player_advantage,
+        };
+
+        let p_w_e = delta_4_first.get_probability();
+        let p_l_e = delta_4_second.get_probability();
+
+        let first_elo_rank_delta = EloRankDelta {
+            w_r: self.result_duty_cycle.1,
+            w_e: p_w_e,
+            k: self.k_factor,
+        };
+
+        let second_elo_rank_delta = EloRankDelta {
+            w_r: self.result_duty_cycle.1,
+            w_e: p_l_e,
+            k: self.k_factor,
+        };
+
+        let new_first_elo = first_player_elo + first_elo_rank_delta.get_elo_rank_delta();
+        let new_second_elo = second_player_elo + second_elo_rank_delta.get_elo_rank_delta();
+
+        (new_first_elo, new_second_elo)
     }
 }
 
@@ -175,8 +177,30 @@ mod tests {
         let new_k = bayes_elo_instance.set_k_factor(20.0f64);
         println!("new k: {}", new_k);
         let result_4_draw = bayes_elo_instance.calculate_4_draw(1700.0_f64, 1200.0_f64, true);
-        println!("new result_4_draw: {}, {}", result_4_draw.0, result_4_draw.1);
+        println!(
+            "new result_4_draw: {}, {}",
+            result_4_draw.0, result_4_draw.1
+        );
         assert_eq!(result_4_draw.0 < 1700.0_f64, true);
         assert_eq!(result_4_draw.1 > 1200.0_f64, true);
+    }
+
+    #[test]
+    fn set_duty_cycle() {
+        let mut bayes_elo_instance = BayesElo::new();
+        bayes_elo_instance.set_result_duty_cycle(ActualProbability::Alternative {
+            win: 0.99,
+            draw: 0.01,
+            lose: 0.0,
+        });
+        println!(
+            "result_duty_cycle: {}, {}, {}",
+            bayes_elo_instance.result_duty_cycle.0,
+            bayes_elo_instance.result_duty_cycle.1,
+            bayes_elo_instance.result_duty_cycle.2
+        );
+        assert_eq!(bayes_elo_instance.result_duty_cycle.0, 0.99);
+        assert_eq!(bayes_elo_instance.result_duty_cycle.1, 0.01);
+        assert_eq!(bayes_elo_instance.result_duty_cycle.2, 0.0);
     }
 }

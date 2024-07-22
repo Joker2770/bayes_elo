@@ -140,18 +140,18 @@ impl BayesElo {
             is_advantage_camp: !is_first_player_advantage,
         };
 
-        let p_w_e = delta_4_first.get_probability();
-        let p_l_e = delta_4_second.get_probability();
+        let p_f_e = delta_4_first.get_probability();
+        let p_s_e = delta_4_second.get_probability();
 
         let first_elo_rank_delta = EloRankDelta {
             w_r: self.result_duty_cycle.1,
-            w_e: p_w_e,
+            w_e: p_f_e,
             k: self.k_factor,
         };
 
         let second_elo_rank_delta = EloRankDelta {
             w_r: self.result_duty_cycle.1,
-            w_e: p_l_e,
+            w_e: p_s_e,
             k: self.k_factor,
         };
 

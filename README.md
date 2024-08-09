@@ -1,5 +1,6 @@
 # bayes_elo
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/72cf25d0c0944860929596f61d2d8749)](https://app.codacy.com/gh/Joker2770/bayes_elo?utm_source=github.com&utm_medium=referral&utm_content=Joker2770/bayes_elo&utm_campaign=Badge_Grade)
 [![Rust](https://github.com/Joker2770/bayes_elo/actions/workflows/rust.yml/badge.svg)](https://github.com/Joker2770/bayes_elo/actions/workflows/rust.yml)
 
 A library for calculating Elo in balanced and unbalanced competitions or games.
